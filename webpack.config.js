@@ -1,20 +1,21 @@
-const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './client/index.js',
+  mode: process.env.NODE_ENV,
+  entry: [
+    'regenerator-runtime/runtime.js',
+    path.join(__dirname, 'client', 'index.js'),
+  ],
   output: {
     path: path.resolve(__dirname, './build'),
-    publicPath: '/build/',
     filename: 'bundle.js',
   },
-  mode: process.env.NODE_ENV,
   module: {
     rules: [
       {
         test: /\.jsx?/,
-        exclude: /(node_modules)/,
+        exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
@@ -25,27 +26,30 @@ module.exports = {
       {
         test: /\.s[ac]ss$/i,
         exclude: /(node_modules)/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use: ['style-loader', 'css-loader'],
       },
     ],
   },
-  devServer: {
-    host: 'localhost',
-    port: 8080,
-    static: {
-      directory: path.resolve(__dirname, './build'),
-      publicPath: '/',
-    },
-    compress: true,
-    hot: true,
-    proxy: {},
-  },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './index.html',
+      template: path.join(__dirname, 'client', 'index.html'),
     }),
   ],
   resolve: {
     extensions: ['.js', '.jsx'],
+  },
+  devServer: {
+    static: {
+      directory: path.join(__dirname, '/'),
+      publicPath: '/',
+    },
+    compress: true,
+    port: 8080,
+    proxy: {
+      '/': {
+        target: 'http://localhost:3000',
+        secure: true,
+      },
+    },
   },
 };
