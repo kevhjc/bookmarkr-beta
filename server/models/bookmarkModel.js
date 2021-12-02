@@ -14,7 +14,7 @@ mongoose
 
 const bookmarksSchema = new Schema({
   url: { type: String, required: true },
-  categories: { type: String },
+  hashtags: { type: [String] },
 });
 
 module.exports = mongoose.model('Bookmark', bookmarksSchema);

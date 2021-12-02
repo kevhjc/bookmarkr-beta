@@ -11,10 +11,192 @@
       rel="stylesheet"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap"
       rel="stylesheet"
     />
     <style>
+      body {
+        background-color: #ffffff;
+        font-family: 'Roboto Mono', menlo, monospace;
+        font-size: 14px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      div {
+        width: 600px;
+        justify-content: center;
+      }
+      #navbar {
+        width: 150px;
+        margin-left: -275px;
+        float: left;
+        text-align: justify;
+        text-justify: distribute-all-lines;
+        display: inline;
+        flex-direction: column;
+        align-items: left;
+        width: 10%;
+        letter-spacing: 1px;
+        position: fixed;
+      }
+      div.hashtagList {
+        width: 150px;
+        font-size: 12px;
+      }
+      h1 {
+        color: rgb(28, 28, 28);
+      }
+      h2 {
+        font-family: 'Roboto', sans-serif;
+        color: rgb(28, 28, 28);
+      }
+      a:link {
+        color: rgb(28, 28, 28);
+        letter-spacing: 1px;
+        text-align: left;
+        text-decoration: none;
+        display: inline-block;
+      }
+      a:visited {
+        color: rgb(28, 28, 28);
+      }
+      a:hover {
+        color: #454545;
+        border-bottom: 1.5px solid;
+      }
+      .title:link {
+        font-family: 'Roboto', sans-serif;
+        color: rgb(33, 33, 33);
+        padding: 5px -20px;
+        letter-spacing: 2px;
+        text-decoration: none;
+        display: inline-block;
+      }
+      .title:visited {
+        color: rgb(33, 33, 33);
+      }
+      .title:hover {
+        color: rgb(223, 47, 47);
+        text-decoration: none;
+        border-bottom: 0px solid;
+      }
+      ul {
+        margin: 15px -40px;
+        display: inline-block;
+      }
+      a.navbar {
+        color: grey;
+        display: flex;
+        flex-direction: column;
+        padding: 5px 0px;
+        letter-spacing: 1px;
+        line-height: 0px;
+        text-decoration: none;
+        border-bottom: 0px solid;
+        width: 10px;
+      }
+      a.navbar:hover {
+        color: rgb(36, 36, 36);
+        border-bottom: 0px solid;
+      }
+      ol {
+        display: flex;
+        flex-direction: column;
+      }
+      p {
+        width: 150px;
+      }
+      p.navbar {
+        color: #949494;
+        font-size: 12px;
+      }
+      span {
+        color: #949494;
+        display: inline-block;
+      }
+      input {
+        font-family: 'Roboto Mono', menlo, monospace;
+        padding: 5px;
+        width: 55%;
+        font-size: 14px;
+        margin-bottom: 10px;
+        display: inline-block;
+      }
+      button {
+        color: #ffffff;
+        background-color: #3e8fe6;
+        border: 0.5px solid #3e8fe6;
+        border-radius: 6px;
+        padding: 5px 15px;
+        letter-spacing: 1px;
+        margin-left: 15px;
+        cursor: pointer;
+        display: inline-block;
+        font-family: 'Roboto Mono', menlo, monospace;
+        box-shadow: var(--shadow-elevation-medium);
+      }
+      button:hover {
+        background-color: #3780ce;
+        border: 0.5px solid #3780ce;
+        transition-duration: 0.5s;
+        box-shadow: var(--shadow-elevation-medium);
+      }
+      .buttonDelete {
+        color: rgb(237, 135, 135);
+        background-color: #f9f6f6;
+        border: 0.5px solid #f9f6f6;
+        transition-duration: 1s;
+        border-radius: 6px;
+        padding: 1px 6px;
+        letter-spacing: 1px;
+        margin-top: 8px;
+        cursor: pointer;
+        /* transform: rotate(-3deg); */
+        box-shadow: var(--shadow-elevation-medium);
+      }
+      .buttonDelete:hover {
+        color: #ffffff;
+        background-color: rgb(225, 73, 73);
+        border: 0.5px solid rgb(225, 73, 73);
+        transition-duration: 1s;
+        box-shadow: var(--shadow-elevation-medium);
+      }
+      .buttonDeleteAll {
+        color: #ffffff;
+        background-color: rgb(225, 73, 73);
+        border: 0.5px solid rgb(225, 73, 73);
+        border-radius: 6px;
+        padding: 5px 15px;
+        letter-spacing: 1px;
+        margin-left: 60px;
+        cursor: pointer;
+        display: inline;
+        justify-content: right;
+        font-family: 'Roboto Mono', menlo, monospace;
+        box-shadow: var(--shadow-elevation-medium);
+      }
+      .buttonDeleteAll:hover {
+        background-color: rgb(216, 57, 57);
+        border: 0.5px solid rgb(216, 57, 57);
+        box-shadow: var(--shadow-elevation-medium);
+      }
+      footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        padding: 5px;
+        width: 100%;
+        opacity: 0.9;
+        background: rgb(31, 153, 250);
+        background: linear-gradient(
+          270deg,
+          rgba(31, 153, 250, 1) 29%,
+          rgba(242, 28, 16, 1) 94%
+        );
+        color: rgb(238, 238, 238);
+        text-align: center;
+      }
       :root {
         --shadow-color: 0deg 0% 0%;
         --shadow-elevation-low: 0.3px 0.4px 0.6px
@@ -36,124 +218,11 @@
           11.5px 12px 18.7px -2.1px hsl(var(--shadow-color) / 0.05),
           16.9px 17.7px 27.5px -2.5px hsl(var(--shadow-color) / 0.05);
       }
-      body {
-        background-color: #dcd3d3;
-        font-family: 'Roboto Mono', menlo, monospace;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-      div {
-        min-width: 675px;
-        justify-content: center;
-      }
-      h1 {
-        color: rgb(28, 28, 28);
-      }
-      a:link {
-        color: rgb(28, 28, 28);
-        letter-spacing: 1px;
-        text-align: left;
-        text-decoration: none;
-        display: inline-block;
-      }
-      a:visited {
-        color: rgb(0, 0, 0);
-      }
-      a:hover {
-        color: #454545;
-        border-bottom: 1px solid;
-      }
-      .title:link {
-        font-family: 'EB Garamond', serif;
-        color: rgb(33, 33, 33);
-        padding: 5px -20px;
-        letter-spacing: 1px;
-        text-decoration: none;
-        display: inline-block;
-      }
-      .title:visited {
-        color: rgb(0, 0, 0);
-      }
-      .title:hover {
-        color: rgb(225, 73, 73);
-        text-decoration: none;
-        border-bottom: 0px solid;
-      }
-      ul {
-        margin: 15px -40px;
-        display: inline-block;
-      }
-      p {
-        color: #b1b1b1;
-      }
-      input {
-        padding: 3px;
-        width: 50%;
-        font-size: 14px;
-        letter-spacing: 1px;
-        font-family: 'Roboto Mono', menlo, monospace;
-      }
-      button {
-        color: #ffffff;
-        background-color: #507fb1;
-        border: 0.5px solid #507fb1;
-        border-radius: 6px;
-        padding: 5px 15px;
-        letter-spacing: 1px;
-        margin-left: 15px;
-        cursor: pointer;
-        display: inline-block;
-        font-family: 'Roboto Mono', menlo, monospace;
-        box-shadow: var(--shadow-elevation-high);
-      }
-      button:hover {
-        background-color: #426d9b;
-        border: 0.5px solid #426d9b;
-        box-shadow: var(--shadow-elevation-high);
-      }
-      .buttonDelete {
-        color: rgb(225, 73, 73);
-        background-color: #eeeeee;
-        border: 0.5px solid #eeeeee;
-        border-radius: 6px;
-        padding: 3px 6px;
-        letter-spacing: 1px;
-        margin-top: 5px;
-        cursor: pointer;
-
-        box-shadow: var(--shadow-elevation-low);
-      }
-      .buttonDelete:hover {
-        color: #ffffff;
-        background-color: rgb(225, 73, 73);
-        border: 0.5px solid rgb(225, 73, 73);
-        box-shadow: var(--shadow-elevation-low);
-      }
-      .buttonDeleteAll {
-        color: #ffffff;
-        background-color: rgb(225, 73, 73);
-        border: 0.5px solid rgb(225, 73, 73);
-        border-radius: 6px;
-        padding: 5px 15px;
-        letter-spacing: 1px;
-        margin-left: 130px;
-        cursor: pointer;
-        display: inline;
-        justify-content: right;
-        font-family: 'Roboto Mono', menlo, monospace;
-        box-shadow: var(--shadow-elevation-high);
-      }
-      .buttonDeleteAll:hover {
-        background-color: rgb(216, 57, 57);
-        border: 0.5px solid rgb(216, 57, 57);
-        box-shadow: var(--shadow-elevation-high);
-      }
     </style>
   </head>
   <body>
     <div id="root"></div>
     <script src="/build/bundle.js"></script>
+    <footer>Bookmarkr Inc. No rights reserved.</footer>
   </body>
 </html>

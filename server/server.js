@@ -28,9 +28,16 @@ app.use((req, res, next) => {
 app.get('/read', (req, res) => {
   Bookmark.find({}, (err, result) => {
     if (err) {
-      res.send(
-        'Error in bookmarkController.getAllBookmarks: ' + JSON.stringify(err)
-      );
+      res.send('Error: ' + JSON.stringify(err));
+    }
+    res.send(result);
+  });
+});
+
+app.get('/read/:hashtag', (req, res) => {
+  Bookmark.find({ hashtags: req.params.hashtag }, (err, result) => {
+    if (err) {
+      res.send('Error: ' + JSON.stringify(err));
     }
     res.send(result);
   });
@@ -40,15 +47,15 @@ app.post('/add', bookmarkController.addBookmark, (req, res) => {
   return res.status(200).redirect('/');
 });
 
-app.get('/', (req, res) => {
-  return res
-    .status(200)
-    .sendFile(path.resolve(__dirname, '../client/index.html'));
-});
+// app.get('/', (req, res) => {
+//   return res
+//     .status(200)
+//     .sendFile(path.resolve(__dirname, '../client/index.html'));
+// });
 
-app.get('/', (req, res) => {
-  return res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
-});
+// app.get('/', (req, res) => {
+//   return res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
+// });
 
 app.delete('/delete/:id', (req, res) => {
   const id = req.params.id;
@@ -56,7 +63,7 @@ app.delete('/delete/:id', (req, res) => {
     if (err) {
       res.send(err);
     }
-    return res.status(200).redirect('/');
+    return res.status(200).send(result);
   });
 });
 
@@ -65,7 +72,7 @@ app.delete('/deleteAll/', (req, res) => {
     if (err) {
       res.send(err);
     }
-    return res.status(200).send('Successfully deleted all bookmarks');
+    return res.status(200).end();
   });
 });
 

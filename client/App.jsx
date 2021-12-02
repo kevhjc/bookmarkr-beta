@@ -1,20 +1,34 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Link, useState, useEffect } from 'react';
 import axios from 'axios';
 
 const App = () => {
   const [bookmarkList, setBookmarkList] = useState([]);
+  const [filteredList, setFilteredList] = useState([]);
   const [url, setUrl] = useState('');
+  const [hashtags, setHashtags] = useState([]);
 
   useEffect(() => {
     axios.get('http://localhost:3000/read').then((res) => {
       setBookmarkList(res.data);
+      setHashtags(res.data);
     });
   }, []);
 
   const handleAddBookmark = () => {
     axios
-      .post('http://localhost:3000/add', { url: url })
+      .post('http://localhost:3000/add', { url: url, hashtags: hashtags })
       .then((res) => console.log(res));
+  };
+
+  const handleFilterByHashtag = (hashtag) => {
+    axios
+      .get(`http://localhost:3000/read/${hashtag}`)
+      .then((res) => console.log(res))
+      .then(
+        axios.get(`http://localhost:3000/read/${hashtag}`).then((res) => {
+          setFilteredList(res);
+        })
+      );
   };
 
   const handleDeleteBookmark = (id) => {
@@ -39,6 +53,26 @@ const App = () => {
       );
   };
 
+  const uniqueHashtags = (docs) => {
+    let arr = [];
+    for (let ele in docs) {
+      arr.push(docs[ele].hashtags);
+    }
+    return arr
+      .flat()
+      .filter((val, idx, curr) => curr.indexOf(val) === idx)
+      .sort();
+  };
+
+  const addHashtag = (val) => {
+    if (val.search(/^#/) == -1) {
+      val = '#' + val;
+    }
+    return val;
+  };
+
+  const sortedHashtags = uniqueHashtags(bookmarkList);
+
   return (
     <div>
       <header>
@@ -53,13 +87,23 @@ const App = () => {
           <input
             name='url'
             type='text'
-            placeholder='Enter a URL'
+            placeholder={`Enter a URL...`}
             onChange={(event) => {
               console.log(event.target.value);
               setUrl(event.target.value);
             }}
           />
-          <button onClick={() => this.handleAddBookmark()}>Add</button>
+          <br />
+          <input
+            name='hashtags'
+            type='text'
+            placeholder={`Add tags...`}
+            onChange={(event) => {
+              console.log(event.target.value);
+              setUrl(event.target.value);
+            }}
+          />
+          <button>Add</button>
           <button className='buttonDeleteAll' onClick={handleDeleteEverything}>
             Delete All
           </button>
@@ -68,6 +112,29 @@ const App = () => {
         <hr />
       </div>
       <br />
+      <div id='navbar'>
+        <h2>Total</h2>
+        <p className='navbar'>{bookmarkList.length} bookmarks</p>
+        <h2>Tags</h2>
+        {sortedHashtags.map((ele, key) => {
+          let url = `/read/${ele}`;
+          return (
+            <div key={key} className='hashtagList'>
+              <p key={key}>
+                <a
+                  href={url}
+                  key={key}
+                  hashtag={ele}
+                  className='navbar'
+                  onClick={() => handleFilterByHashtag(ele)}
+                >
+                  {addHashtag(ele)}
+                </a>
+              </p>
+            </div>
+          );
+        })}
+      </div>
       {bookmarkList
         .slice(0)
         .reverse()
@@ -85,9 +152,19 @@ const App = () => {
                   return (
                     <ul>
                       &#128279;&nbsp;
-                      <a href={setHttp(ele.url)}>
-                        {ele.url.substring(0, 50)}...
+                      <a href={setHttp(ele.url)} hashtags={ele.hashtags}>
+                        {ele.url.substring(0, 58)}...
                       </a>
+                      <br />
+                      {ele.hashtags.map((el, index) => {
+                        const addHashtag = (val) => {
+                          if (val.search(/^#/) == -1) {
+                            val = '#' + val;
+                          }
+                          return val;
+                        };
+                        return <span key={index}>{addHashtag(el)} &nbsp;</span>;
+                      })}
                       <button
                         className='buttonDelete'
                         onClick={() => handleDeleteBookmark(ele._id)}
@@ -100,7 +177,19 @@ const App = () => {
                   return (
                     <ul>
                       &#128279;&nbsp;
-                      <a href={setHttp(ele.url)}>{ele.url.substring(0, 50)}</a>
+                      <a href={setHttp(ele.url)} hashtags={ele.hashtags}>
+                        {ele.url.substring(0, 50)}
+                      </a>
+                      <br />
+                      {ele.hashtags.map((el, index) => {
+                        const addHashtag = (val) => {
+                          if (val.search(/^#/) == -1) {
+                            val = '#' + val;
+                          }
+                          return val;
+                        };
+                        return <span key={index}>{addHashtag(el)} &nbsp;</span>;
+                      })}
                       <button
                         className='buttonDelete'
                         onClick={() => handleDeleteBookmark(ele._id)}
@@ -114,6 +203,9 @@ const App = () => {
             </div>
           );
         })}
+      <br />
+      <br />
+      <br />
     </div>
   );
 };

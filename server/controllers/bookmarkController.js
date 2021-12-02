@@ -2,21 +2,22 @@ const Bookmark = require('../models/bookmarkModel');
 
 const bookmarkController = {};
 
-bookmarkController.getAllBookmarks = (req, res, next) => {
-  Bookmark.find({}, (err, result) => {
-    if (err) {
-      res.send(
-        'Error in bookmarkController.getAllBookmarks: ' + JSON.stringify(err)
-      );
-    }
-    res.locals.bookmarks = result;
-    return next();
-  });
-};
+// bookmarkController.getAllBookmarks = (req, res, next) => {
+//   Bookmark.find({}, (err, result) => {
+//     if (err) {
+//       res.send(
+//         'Error in bookmarkController.getAllBookmarks: ' + JSON.stringify(err)
+//       );
+//     }
+//     res.locals.bookmarks = result;
+//     return next();
+//   });
+// };
 
 bookmarkController.addBookmark = async (req, res, next) => {
-  const { url } = req.body;
-  const bookmark = new Bookmark({ url: url });
+  const { url, hashtags } = req.body;
+  const hashtagsArr = hashtags.split(' ');
+  const bookmark = new Bookmark({ url: url, hashtags: hashtagsArr });
   try {
     const result = await bookmark.save();
     res.locals.bookmarks = result;
