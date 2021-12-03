@@ -113,8 +113,12 @@ const App = () => {
       </div>
       <br />
       <div id='navbar'>
-        <h2>Total</h2>
-        <p className='navbar'>{bookmarkList.length} bookmarks</p>
+        <h2>Totals</h2>
+        <p className='navbar'>
+          {bookmarkList.length} bookmarks
+          <br />
+          {sortedHashtags.length} tags
+        </p>
         <h2>Tags</h2>
         {sortedHashtags.map((ele, key) => {
           let url = `/read/${ele}`;
@@ -148,10 +152,10 @@ const App = () => {
           return (
             <div key={key}>
               {(() => {
-                if (ele.url.length >= 50) {
+                if (ele.url.length > 50) {
                   return (
                     <ul>
-                      &#128279;&nbsp;
+                      &#128279;
                       <a href={setHttp(ele.url)} hashtags={ele.hashtags}>
                         {ele.url.substring(0, 58)}...
                       </a>
@@ -176,7 +180,7 @@ const App = () => {
                 } else {
                   return (
                     <ul>
-                      &#128279;&nbsp;
+                      &#128279;
                       <a href={setHttp(ele.url)} hashtags={ele.hashtags}>
                         {ele.url.substring(0, 50)}
                       </a>
