@@ -28,20 +28,12 @@
         justify-content: center;
       }
       #navbar {
-        width: 150px;
-        margin-left: -275px;
-        float: left;
-        text-align: justify;
-        text-justify: distribute-all-lines;
-        display: inline;
-        flex-direction: column;
-        align-items: left;
-        width: 10%;
+        width: 100px;
+        margin-left: -180px;
         letter-spacing: 1px;
         position: fixed;
       }
       div.hashtagList {
-        width: 150px;
         font-size: 12px;
       }
       h1 {
@@ -54,6 +46,9 @@
       a:link {
         color: rgb(28, 28, 28);
         letter-spacing: 1px;
+        border-radius: 6px;
+        padding: 5px 15px;
+        letter-spacing: 1px;
         text-align: left;
         text-decoration: none;
         display: inline-block;
@@ -63,12 +58,13 @@
       }
       a:hover {
         color: #454545;
-        border-bottom: 1.5px solid;
+        text-decoration: underline;
       }
       .title:link {
         font-family: 'Roboto', sans-serif;
         color: rgb(33, 33, 33);
-        padding: 5px -20px;
+        padding: 5px 0px;
+        font-size: 30px;
         letter-spacing: 2px;
         text-decoration: none;
         display: inline-block;
@@ -94,7 +90,7 @@
         line-height: 0px;
         text-decoration: none;
         border-bottom: 0px solid;
-        width: 10px;
+        width: 100px;
       }
       a.navbar:hover {
         color: rgb(36, 36, 36);
@@ -105,11 +101,12 @@
         flex-direction: column;
       }
       p {
-        width: 150px;
+        width: auto;
       }
       p.navbar {
         color: #949494;
         font-size: 12px;
+        width: 100px;
       }
       span {
         color: #949494;
@@ -150,9 +147,7 @@
         border-radius: 6px;
         padding: 1px 6px;
         letter-spacing: 1px;
-        margin-top: 8px;
         cursor: pointer;
-        /* transform: rotate(-3deg); */
         box-shadow: var(--shadow-elevation-medium);
       }
       .buttonDelete:hover {
